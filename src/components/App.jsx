@@ -1,6 +1,16 @@
 class App extends React.Component {
   constructor(props) {
     super(props);
+    // set the initial state
+    this.state = {video: window.exampleVideoData[0]};
+    this.handleClick = this.handleClick.bind(this); 
+
+  }
+
+  handleClick(e) {
+    //this.setState({});
+    console.log('Handle click: ', this);
+    this.setState({video: e});
   }
   
   render() {
@@ -13,10 +23,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5><em>videoPlayer</em> view goes here</h5></div>
+            <div><VideoPlayer video={this.state.video}/></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em>videoList</em><VideoList videos={window.exampleVideoData}/></h5></div>
+            <div><VideoList videos={window.exampleVideoData} onClick={this.handleClick}/></div>
           </div>
         </div>
       </div>
