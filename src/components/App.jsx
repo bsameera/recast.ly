@@ -2,23 +2,41 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     // set the initial state
-    this.state = {video: window.exampleVideoData[0]};
-    this.handleClick = this.handleClick.bind(this); 
+    this.state = {video: window.exampleVideoData[0], videos: window.exampleVideoData, text: ''};
+    this.clickVideo = this.clickVideo.bind(this); 
+    // this.clickSearch = this.clickSearch.bind(this);
+    this.updateText = this.updateText.bind(this);
+    this.youtubeData = this.youtubeData.bind(this);
+    window.searchYouTube({}, this.youtubeData);
 
   }
+  
+  youtubeData(videos) {
+    this.setState({video: videos[0]});
+    this.setState({videos: videos});
+  }
 
-  handleClick(e) {
+  updateText(newText) {
     //this.setState({});
-    console.log('Handle click: ', this);
+    console.log('here');
+    this.setState({text: newText.target.value});
+  }
+
+  clickVideo(e) {
+    //this.setState({});
     this.setState({video: e});
   }
+  
+  // clickSearch(optionObj) {
+  //   this.setState({options: optionObj});
+  // }
   
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <div><Search onChangeText={this.updateText}/></div>
           </div>
         </nav>
         <div className="row">
@@ -26,7 +44,7 @@ class App extends React.Component {
             <div><VideoPlayer video={this.state.video}/></div>
           </div>
           <div className="col-md-5">
-            <div><VideoList videos={window.exampleVideoData} onClick={this.handleClick}/></div>
+            <div><VideoList videos={this.state.videos} onClick={this.clickVideo}/></div>
           </div>
         </div>
       </div>
